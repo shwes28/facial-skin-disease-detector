@@ -6,6 +6,7 @@ Model Training Script for Skin Disease Classification
 - Optimizer: Adam
 - Loss: CrossEntropyLoss
 - Data Augmentation: Random Flips, Rotations, Color Jitter
+- Saves weights to: models/skin_model.pth
 """
 
 import os
@@ -17,7 +18,8 @@ from torchvision import datasets, models, transforms
 from torch.utils.data import DataLoader
 
 DATA_DIR = "data"
-MODEL_SAVE_PATH = "skin_model.pth"
+MODELS_DIR = "models"
+MODEL_SAVE_PATH = os.path.join(MODELS_DIR, "skin_model.pth")
 BATCH_SIZE = 32
 NUM_EPOCHS = 15
 LEARNING_RATE = 1e-4
@@ -59,16 +61,19 @@ def train_model():
     
     if not os.path.exists(DATA_DIR) or not os.path.exists(os.path.join(DATA_DIR, 'train')):
         print(f"[ERROR] Data folder '{DATA_DIR}/train' not found.")
-        print("Please run 'python prepare_data.py' first to balance and split your raw images.")
+        print("Please run:")
+        print("  1. python download_dataset.py")
+        print("  2. python prepare_data.py")
         return
 
+    os.makedirs(MODELS_DIR, exist_ok=True)
     dataloaders, dataset_sizes, class_names = get_data_loaders()
     print(f"[INFO] Target Classes: {class_names}")
     print(f"[INFO] Train samples: {dataset_sizes['train']}, Val samples: {dataset_sizes['val']}")
 
     model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
 
-    # Freeze base feature layers
+    # Freeze base feature layers for transfer learning
     for param in model.features.parameters():
         param.requires_grad = False
 
@@ -123,6 +128,8 @@ def train_model():
 
     print(f"\n[SUCCESS] Best Validation Accuracy: {best_acc:.4f}")
     torch.save(best_model_wts, MODEL_SAVE_PATH)
+    # Also save in root as fallback
+    torch.save(best_model_wts, "skin_model.pth")
     print(f"[INFO] Best model weights saved to {MODEL_SAVE_PATH}")
 
 if __name__ == '__main__':

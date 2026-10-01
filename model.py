@@ -26,11 +26,11 @@ INFERENCE_TRANSFORMS = transforms.Compose([
     )
 ])
 
-def get_model(weights_path: str = "skin_model.pth"):
+def get_model(weights_path: str = "models/skin_model.pth"):
     """
     Loads MobileNetV2 with a customized 2-class classification head.
-    If fine-tuned weights exist at weights_path, loads them;
-    otherwise uses the pre-trained ImageNet backbone for immediate testing.
+    Checks 'models/skin_model.pth' and 'skin_model.pth'.
+    If weights exist, loads them; otherwise initializes with ImageNet backbone.
     """
     model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
     
@@ -38,11 +38,18 @@ def get_model(weights_path: str = "skin_model.pth"):
     in_features = model.classifier[1].in_features
     model.classifier[1] = nn.Linear(in_features, len(CLASSES))
     
+    # Check alternate paths
+    target_weights = None
     if os.path.exists(weights_path):
+        target_weights = weights_path
+    elif os.path.exists("skin_model.pth"):
+        target_weights = "skin_model.pth"
+        
+    if target_weights:
         try:
-            state_dict = torch.load(weights_path, map_location=torch.device('cpu'))
+            state_dict = torch.load(target_weights, map_location=torch.device('cpu'))
             model.load_state_dict(state_dict)
-            print(f"[INFO] Loaded custom trained weights from {weights_path}")
+            print(f"[INFO] Loaded custom trained weights from {target_weights}")
         except Exception as e:
             print(f"[WARNING] Could not load weights: {e}")
     else:
@@ -68,7 +75,7 @@ def generate_activation_map(model, input_tensor):
     except Exception:
         return None
 
-def predict_skin_image(image: Image.Image, model=None, weights_path: str = "skin_model.pth"):
+def predict_skin_image(image: Image.Image, model=None, weights_path: str = "models/skin_model.pth"):
     """
     Processes a PIL image and returns predictions, probabilities, and advice.
     """
