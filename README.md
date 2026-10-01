@@ -25,7 +25,7 @@ An end-to-end computer vision and clinical decision-support web application that
 ## 📂 Project Structure
 
 ```
-skin_disease_detector/
+facial-skin-disease-detector/
 │
 ├── app.py              # Interactive Streamlit dashboard & web UI
 ├── model.py            # MobileNetV2 architecture, inference & Grad-CAM heatmaps
@@ -58,26 +58,19 @@ The application will launch in your browser at `http://localhost:8501`.
 ### Step 1: Push Code to GitHub
 1. Open PowerShell or Command Prompt in the project folder:
    ```bash
-   cd C:\Users\shwet\.gemini\antigravity\scratch\skin_disease_detector
+   cd C:\Users\shwet\.gemini\antigravity\scratch\facial-skin-disease-detector
    ```
-2. Initialize and commit the repository:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit: DermAI Skin Disease Detection Dashboard"
-   ```
-3. Create a new repository on [GitHub](https://github.com/new) named `skin-disease-detector`.
-4. Link and push your repository:
+2. Link and push your repository:
    ```bash
    git branch -M main
-   git remote add origin https://github.com/YOUR_USERNAME/skin-disease-detector.git
+   git remote add origin https://github.com/YOUR_USERNAME/facial-skin-disease-detector.git
    git push -u origin main
    ```
 
 ### Step 2: Deploy to Streamlit Cloud (Free Hosting)
 1. Go to [share.streamlit.io](https://share.streamlit.io/) and log in with your GitHub account.
 2. Click **"New app"**.
-3. Select your repository: `YOUR_USERNAME/skin-disease-detector`.
+3. Select your repository: `YOUR_USERNAME/facial-skin-disease-detector`.
 4. Set the Main file path to: `app.py`.
 5. Click **"Deploy!"**. Your app will be live with a shareable public URL in under 2 minutes.
 
