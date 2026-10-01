@@ -99,8 +99,8 @@ def predict_skin_image(image: Image.Image, model=None, weights_path: str = "mode
     
     if predicted_class == "Acne":
         recommendations = {
-            "title": "Acne Vulgaris Detected",
-            "summary": "Visual features are consistent with localized inflammatory or non-inflammatory acne lesions (e.g., papules, pustules, or comedones).",
+            "title": "Acne Detected",
+            "summary": "Visual features are consistent with localized inflammatory or non-inflammatory acne lesions.",
             "care_steps": [
                 "Cleanse gently twice daily with a mild, non-comedogenic cleanser.",
                 "Consider over-the-counter topical treatments with Salicylic Acid (BHA) or Benzoyl Peroxide.",
@@ -112,7 +112,7 @@ def predict_skin_image(image: Image.Image, model=None, weights_path: str = "mode
     else:
         recommendations = {
             "title": "Other Skin Lesion Detected",
-            "summary": "Features are not typical for common acne. The image indicates another dermatological lesion (e.g., mole/nevus, dermatitis, rosacea, or atypical lesion).",
+            "summary": "Visual features are not typical for common acne and indicate another dermatological skin lesion.",
             "care_steps": [
                 "Schedule an in-person evaluation with a board-certified dermatologist for clinical dermoscopy.",
                 "Check for the ABCDE criteria: Asymmetry, Border irregularity, Color variation, Diameter (>6mm), and Evolution over time.",

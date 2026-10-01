@@ -109,8 +109,8 @@ st.sidebar.header("ℹ️ Model Architecture")
 st.sidebar.markdown("""
 * **Backbone:** MobileNetV2 (Transfer Learning)
 * **Classes:** 
-  1. `Acne` (Papules, pustules, comedones)
-  2. `Other Skin Lesion` (Nevi, dermatitis, rosacea)
+  1. `Acne`
+  2. `Other Skin Lesion`
 * **Balance:** Strict 1:1 ratio
 * **Explainability:** Feature Activation Mapping (CAM)
 """)
@@ -134,7 +134,7 @@ elif input_option == "Use Live Camera":
 elif input_option == "Load Demo Sample":
     demo_choice = st.sidebar.selectbox(
         "Select a simulated sample to test:",
-        ["Sample 1: Inflammatory Blemish (Acne)", "Sample 2: Pigmented Spot (Other Lesion)"]
+        ["Sample 1: Acne", "Sample 2: Other Skin Lesion"]
     )
     img_size = (300, 300)
     if "Acne" in demo_choice:
@@ -200,7 +200,7 @@ with tab_screen:
             # Interactive Plotly Bar Chart
             st.markdown("#### Probability Distribution")
             chart_df = {
-                "Condition": ["Acne Vulgaris", "Other Skin Lesion"],
+                "Condition": ["Acne", "Other Skin Lesion"],
                 "Probability": [probs["Acne"], probs["Other Skin Lesion"]],
                 "Color": ["#2563EB", "#EA580C"]
             }
@@ -211,7 +211,7 @@ with tab_screen:
                 orientation='h',
                 text=[f"{p:.1f}%" for p in chart_df["Probability"]],
                 color="Condition",
-                color_discrete_map={"Acne Vulgaris": "#2563EB", "Other Skin Lesion": "#EA580C"}
+                color_discrete_map={"Acne": "#2563EB", "Other Skin Lesion": "#EA580C"}
             )
             fig_bar.update_layout(
                 showlegend=False,
