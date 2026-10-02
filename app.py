@@ -185,27 +185,23 @@ elif input_option == "Use Live Camera":
         selected_image = Image.open(camera_file)
 
 elif input_option == "Load Demo Sample":
+    demo_samples_dir = os.path.join(os.path.dirname(__file__), "demo_samples")
+    sample_options = {
+        "Sample 1: Clinical Acne (Pustule & Papule)": "sample_acne_1.jpg",
+        "Sample 2: Clinical Acne (Cheek & Forehead)": "sample_acne_2.jpg",
+        "Sample 3: Other Skin Lesion (Pigmented Nevus)": "sample_lesion_1.jpg",
+        "Sample 4: Other Skin Lesion (Seborrheic Keratosis)": "sample_lesion_2.jpg",
+    }
     demo_choice = st.sidebar.selectbox(
-        "Select a simulated sample to test:",
-        ["Sample 1: Acne", "Sample 2: Other Skin Lesion"]
+        "Select a real clinical photo to test:",
+        list(sample_options.keys())
     )
-    img_size = (300, 300)
-    if "Acne" in demo_choice:
-        base = Image.new("RGB", img_size, (235, 195, 170))
-        img_np = np.array(base, dtype=np.uint8)
-        y, x = np.ogrid[:300, :300]
-        mask1 = (x - 150)**2 + (y - 140)**2 < 25**2
-        mask2 = (x - 180)**2 + (y - 190)**2 < 18**2
-        img_np[mask1] = [190, 60, 60]
-        img_np[mask2] = [200, 75, 75]
-        selected_image = Image.fromarray(img_np)
+    sample_filename = sample_options[demo_choice]
+    sample_path = os.path.join(demo_samples_dir, sample_filename)
+    if os.path.exists(sample_path):
+        selected_image = Image.open(sample_path)
     else:
-        base = Image.new("RGB", img_size, (240, 200, 175))
-        img_np = np.array(base, dtype=np.uint8)
-        y, x = np.ogrid[:300, :300]
-        mask = ((x - 150)/35)**2 + ((y - 150)/25)**2 < 1.0
-        img_np[mask] = [90, 50, 35]
-        selected_image = Image.fromarray(img_np)
+        st.sidebar.error("Sample image not found on disk.")
 
 # --- Tabs Layout ---
 tab_screen, tab_metrics, tab_guide = st.tabs([
@@ -258,10 +254,23 @@ with tab_screen:
         else:
             heatmap_overlay = selected_image
 
-        # Left Column: Interactive Before & After Slider
+        # Left Column: Interactive Before & After Slider or Side-by-Side
         with col_img:
-            st.subheader("🖼️ Interactive Comparison")
-            render_before_after_slider(selected_image, heatmap_overlay)
+            st.subheader("🖼️ Visual Attention (Grad-CAM)")
+            view_mode = st.radio(
+                "Display Mode",
+                ["Split Slider", "Side-by-Side"],
+                horizontal=True,
+                label_visibility="collapsed"
+            )
+            if view_mode == "Split Slider":
+                render_before_after_slider(selected_image, heatmap_overlay)
+            else:
+                img_c1, img_c2 = st.columns(2)
+                with img_c1:
+                    st.image(selected_image, caption="Original Photo", use_container_width=True)
+                with img_c2:
+                    st.image(heatmap_overlay, caption="Grad-CAM Heatmap", use_container_width=True)
 
         # Right Column: Diagnostic Result Card & Plotly Chart
         with col_pred:
