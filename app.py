@@ -200,6 +200,7 @@ elif input_option == "Load Demo Sample":
     sample_path = os.path.join(demo_samples_dir, sample_filename)
     if os.path.exists(sample_path):
         selected_image = Image.open(sample_path)
+        st.sidebar.image(selected_image, caption=f"Selected: {demo_choice}", use_container_width=True)
     else:
         st.sidebar.error("Sample image not found on disk.")
 
