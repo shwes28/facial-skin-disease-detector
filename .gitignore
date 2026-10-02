@@ -27,5 +27,6 @@ wheels/
 .vscode/
 data/
 raw_data/
-*.pth
+skin_model.pth
+!models/skin_model.pth
 .DS_Store
