@@ -187,10 +187,10 @@ elif input_option == "Use Live Camera":
 elif input_option == "Load Demo Sample":
     demo_samples_dir = os.path.join(os.path.dirname(__file__), "demo_samples")
     sample_options = {
-        "Sample 1: Clinical Acne (Pustule & Papule)": "sample_acne_1.jpg",
-        "Sample 2: Clinical Acne (Cheek & Forehead)": "sample_acne_2.jpg",
-        "Sample 3: Other Skin Lesion (Pigmented Nevus)": "sample_lesion_1.jpg",
-        "Sample 4: Other Skin Lesion (Seborrheic Keratosis)": "sample_lesion_2.jpg",
+        "Sample 1: Acne": "sample_acne_1.jpg",
+        "Sample 2: Acne": "sample_acne_2.jpg",
+        "Sample 3: Other Skin Lesion": "sample_lesion_1.jpg",
+        "Sample 4: Other Skin Lesion": "sample_lesion_2.jpg",
     }
     demo_choice = st.sidebar.selectbox(
         "Select a real clinical photo to test:",
@@ -256,7 +256,7 @@ with tab_screen:
 
         # Left Column: Interactive Before & After Slider or Side-by-Side
         with col_img:
-            st.subheader("🖼️ Visual Attention (Grad-CAM)")
+            st.subheader("🖼️ Visual Attention Heatmap")
             view_mode = st.radio(
                 "Display Mode",
                 ["Split Slider", "Side-by-Side"],
