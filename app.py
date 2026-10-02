@@ -17,7 +17,7 @@ from model import get_model, predict_skin_image, CLASSES
 
 # --- Streamlit Page Configuration ---
 st.set_page_config(
-    page_title="DermAI: Facial Skin Screener",
+    page_title="Facial Skin Disease Detector",
     page_icon="🔬",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -91,8 +91,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- Header Section ---
-st.markdown('<div class="main-header">🔬 DermAI: Facial Skin Screener</div>', unsafe_allow_html=True)
-st.markdown('<div class="sub-header">Computer Vision screening assistant distinguishing <b>Acne</b> from <b>Other Skin Lesion</b>.</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-header">🔬 Facial Skin Disease Detector</div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-header">Computer Vision deep learning assistant distinguishing <b>Acne</b> from <b>Other Skin Lesion</b> with Grad-CAM explainability.</div>', unsafe_allow_html=True)
 
 # --- Medical Advisory Banner ---
 st.markdown("""

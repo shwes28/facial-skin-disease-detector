@@ -1,4 +1,4 @@
-# 🔬 DermAI — Facial Skin Lesion & Acne Detection Dashboard
+# 🔬 Facial Skin Disease Detector
 
 > End-to-end Computer Vision & Clinical Decision-Support System that classifies facial skin spots as either **Acne Vulgaris** or **Other Skin Lesion** using transfer learning (MobileNetV2), visual attention heatmaps (Grad-CAM), and actionable clinical triage guidelines.
 
